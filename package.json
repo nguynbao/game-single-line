@@ -1,0 +1,21 @@
+{
+  "name": "single-line-playable",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "levels": "node scripts/generate-levels.mjs",
+    "verify": "esbuild scripts/verify-levels.ts --bundle --platform=node --log-level=warning --outfile=node_modules/.cache/verify-levels.cjs && node node_modules/.cache/verify-levels.cjs"
+  },
+  "dependencies": {
+    "@fontsource/baloo-2": "^5.2.0",
+    "phaser": "^3.88.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3",
+    "vite": "^6.2.0"
+  }
+}
