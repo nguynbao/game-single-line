@@ -51,11 +51,11 @@ export const YARNS: YarnColor[] = [
 export const LEVELS_PER_CHAPTER = 10;
 
 export const CHAPTERS = [
-  { name: 'Sợi chỉ đầu tiên', tip: 'Đi qua mọi đường đúng một lần, không nhấc tay.' },
-  { name: 'Đường chéo', tip: 'Có hai điểm lẻ? Hãy bắt đầu ở một trong hai điểm đó.' },
-  { name: 'Ngõ nhỏ', tip: 'Đừng tự chặn đường về. Để dành lối ra cho cuối.' },
-  { name: 'Khâu hai lượt', tip: 'Đường đôi phải đi qua hai lần.' },
-  { name: 'Thợ khâu lành nghề', tip: 'Bạn đã sẵn sàng. Chúc may mắn!' },
+  { name: 'First Stitch', tip: 'Connect all lines in a single stroke without lifting your finger.' },
+  { name: 'Diagonal Weave', tip: 'Two odd pins? Start at one of them and finish at the other.' },
+  { name: 'Narrow Pathways', tip: 'Never block your way back. Save your exits for last.' },
+  { name: 'Double Loop', tip: 'Double lines must be crossed twice.' },
+  { name: 'Master Tailor', tip: 'You have mastered the craft. Good luck!' },
 ];
 
 export function chapterOf(levelIndex: number) {

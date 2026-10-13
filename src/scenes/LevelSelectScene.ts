@@ -29,7 +29,7 @@ export class LevelSelectScene extends Phaser.Scene {
     addFeltBackground(this);
 
     createIconButton(this, 82, 82, 'back', () => this.go('MenuScene', {}));
-    this.add.text(GAME_WIDTH / 2, 82, 'Chọn màn', textStyle(44, '800')).setOrigin(0.5);
+    this.add.text(GAME_WIDTH / 2, 82, 'Select Level', textStyle(44, '800')).setOrigin(0.5);
 
     this.pageLayer = this.add.container(0, 0);
 
@@ -110,10 +110,10 @@ export class LevelSelectScene extends Phaser.Scene {
     for (let y = -44; y <= 44; y += 18) spool.lineBetween(-44, y, 44, y + 5);
     layer.add(spool);
 
-    layer.add(this.add.text(GAME_WIDTH / 2, 410, `Chương ${c + 1}: ${CHAPTERS[c].name}`, textStyle(38, '800')).setOrigin(0.5));
+    layer.add(this.add.text(GAME_WIDTH / 2, 410, `Chapter ${c + 1}: ${CHAPTERS[c].name}`, textStyle(38, '800')).setOrigin(0.5));
     layer.add(
       this.add
-        .text(GAME_WIDTH / 2, 458, `Đã xong ${done}/${last - first} màn`, textStyle(24, '600', HEX.LINEN_DIM))
+        .text(GAME_WIDTH / 2, 458, `Completed ${done}/${last - first} levels`, textStyle(24, '600', HEX.LINEN_DIM))
         .setOrigin(0.5)
     );
 
@@ -128,7 +128,7 @@ export class LevelSelectScene extends Phaser.Scene {
     }
 
     const legend = this.add
-      .text(GAME_WIDTH / 2, 930, 'Chấm vàng: giải không cần gợi ý', textStyle(22, '600', HEX.LINEN_DIM))
+      .text(GAME_WIDTH / 2, 930, 'Gold pin: solved without hints', textStyle(22, '600', HEX.LINEN_DIM))
       .setOrigin(0.5);
     layer.add(legend);
   }

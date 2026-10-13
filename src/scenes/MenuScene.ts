@@ -27,12 +27,12 @@ export class MenuScene extends Phaser.Scene {
 
     this.add.text(GAME_WIDTH / 2, 640, 'Single Line', textStyle(104, '800', HEX.LINEN)).setOrigin(0.5);
     this.add
-      .text(GAME_WIDTH / 2, 722, 'Khâu hết mọi đường chỉ bằng một nét.', textStyle(28, '600', HEX.LINEN_DIM))
+      .text(GAME_WIDTH / 2, 722, 'Draw all lines in one continuous stroke.', textStyle(28, '600', HEX.LINEN_DIM))
       .setOrigin(0.5);
 
     const next = progress.nextLevel();
     const allDone = progress.doneCount === LEVELS.length;
-    const playLabel = progress.doneCount === 0 ? 'Bắt đầu chơi' : allDone ? 'Chơi lại màn 50' : `Chơi màn ${next + 1}`;
+    const playLabel = progress.doneCount === 0 ? 'Play Game' : allDone ? 'Replay Level 50' : `Play Level ${next + 1}`;
 
     const play = createButton(this, GAME_WIDTH / 2, 880, 440, 104, () => this.go('GameScene', { level: next }), {
       fill: YARNS[0].dark,
@@ -44,10 +44,10 @@ export class MenuScene extends Phaser.Scene {
     const pick = createButton(this, GAME_WIDTH / 2, 1012, 440, 88, () => this.go('LevelSelectScene', {}), {
       radius: 44,
     });
-    pick.face.add(this.add.text(0, -2, 'Chọn màn', textStyle(32, '800', HEX.LINEN)).setOrigin(0.5));
+    pick.face.add(this.add.text(0, -2, 'Select Level', textStyle(32, '800', HEX.LINEN)).setOrigin(0.5));
 
     this.add
-      .text(GAME_WIDTH / 2, 1120, `Đã xong ${progress.doneCount}/${LEVELS.length} màn`, textStyle(24, '600', HEX.LINEN_DIM))
+      .text(GAME_WIDTH / 2, 1120, `Completed ${progress.doneCount}/${LEVELS.length} levels`, textStyle(24, '600', HEX.LINEN_DIM))
       .setOrigin(0.5);
 
     const soundBtn = createIconButton(this, GAME_WIDTH - 82, 82, sound.isMuted() ? 'muted' : 'sound', () => {

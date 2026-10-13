@@ -17,9 +17,9 @@ import {
 } from '../ui';
 
 const TUTORIAL_TIPS: Record<number, string> = {
-  0: 'Chạm vào một chốt rồi kéo qua các đường.',
-  1: 'Kẹt rồi? Hãy bắt đầu ở góc có ba đường nối vào.',
-  2: 'Kéo ngược về chốt trước để gỡ mũi vừa khâu.',
+  0: 'Touch a pin and drag along the lines.',
+  1: 'Stuck? Try starting from a corner with three lines connected.',
+  2: 'Drag backwards to undo the last stitch.',
 };
 
 export class GameScene extends Phaser.Scene {
@@ -71,7 +71,7 @@ export class GameScene extends Phaser.Scene {
       soundBtn.setIcon(m ? 'muted' : 'sound');
       sound.tap();
     });
-    this.add.text(GAME_WIDTH / 2, 66, `Màn ${this.levelIndex + 1}`, textStyle(46, '800')).setOrigin(0.5);
+    this.add.text(GAME_WIDTH / 2, 66, `Level ${this.levelIndex + 1}`, textStyle(46, '800')).setOrigin(0.5);
     this.add
       .text(GAME_WIDTH / 2, 112, CHAPTERS[chapter].name, textStyle(22, '600', this.yarn.hex))
       .setOrigin(0.5);
@@ -97,9 +97,9 @@ export class GameScene extends Phaser.Scene {
       .setOrigin(0.5);
 
     // --- Tools ---
-    this.undoBtn = createIconButton(this, GAME_WIDTH / 2 - 190, 1125, 'undo', () => this.undo(), { caption: 'Lùi lại' });
-    this.restartBtn = createIconButton(this, GAME_WIDTH / 2, 1125, 'restart', () => this.restart(), { caption: 'Làm lại' });
-    createIconButton(this, GAME_WIDTH / 2 + 190, 1125, 'hint', () => this.hint(), { caption: 'Gợi ý' });
+    this.undoBtn = createIconButton(this, GAME_WIDTH / 2 - 190, 1125, 'undo', () => this.undo(), { caption: 'Undo' });
+    this.restartBtn = createIconButton(this, GAME_WIDTH / 2, 1125, 'restart', () => this.restart(), { caption: 'Restart' });
+    createIconButton(this, GAME_WIDTH / 2 + 190, 1125, 'hint', () => this.hint(), { caption: 'Hint' });
 
     // --- Input ---
     this.input.on('pointerdown', this.onDown, this);
@@ -121,7 +121,7 @@ export class GameScene extends Phaser.Scene {
   private refresh() {
     this.board.redraw(this.puzzle, { showCurrent: !this.finished });
     const p = this.puzzle;
-    this.counter.setText(`${p.donePasses}/${p.totalPasses} đường`);
+    this.counter.setText(`${p.donePasses}/${p.totalPasses} lines`);
     const hasPath = p.path.length > 0;
     this.undoBtn.setEnabled(hasPath && !this.finished);
     this.restartBtn.setEnabled(hasPath && !this.finished);
@@ -196,7 +196,7 @@ export class GameScene extends Phaser.Scene {
     } else if (node !== p.current) {
       sound.blocked();
       this.shakePin(p.current);
-      this.toast('Nối tiếp từ chốt đang sáng, hoặc bấm Làm lại.');
+      this.toast('Continue from the lit pin, or tap Restart.');
       return;
     }
     this.dragging = true;
@@ -287,7 +287,7 @@ export class GameScene extends Phaser.Scene {
     if (!route) {
       // Dead end: unpick stitches until the rest can still be drawn in one go
       while (!route && p.undo()) route = p.solve();
-      this.toast('Đường đó bị kẹt. Đã gỡ về chỗ còn đi tiếp được.');
+      this.toast('Dead end! Unwound back to a solvable state.');
       this.refresh();
     }
     if (!route || !route.length) return;
@@ -300,7 +300,7 @@ export class GameScene extends Phaser.Scene {
     g.lineStyle(4, COLORS.LINEN, 1);
     g.strokeCircle(a.x, a.y, this.board.pinRadius + 14);
 
-    if (p.current === null) this.toast('Bắt đầu từ chốt có vòng sáng.');
+    if (p.current === null) this.toast('Start at the glowing pin.');
     if (route.length > 1) {
       const b = pos[route[1]];
       g.lineStyle(this.board.yarnWidth + 8, COLORS.LINEN, 0.35);
@@ -382,16 +382,16 @@ export class GameScene extends Phaser.Scene {
     dashedPolyline(pg, roundedRectPoints(-w / 2 + 14, -h / 2 + 14, w - 28, h - 28, 22), 12, 9, true);
     panel.add(pg);
 
-    const title = isLast ? 'Xong cả 50 màn!' : 'Khâu xong!';
-    panel.add(this.add.text(0, -h / 2 + 82, title, textStyle(58, '800')).setOrigin(0.5));
+    const title = isLast ? 'All 50 Levels Complete!' : 'Pattern Completed!';
+    panel.add(this.add.text(0, -h / 2 + 82, title, textStyle(52, '800')).setOrigin(0.5));
     const sub = isLast
-      ? 'Bạn đã là thợ khâu lành nghề.'
+      ? 'You are officially a Master Tailor.'
       : this.usedHint
-        ? `Màn ${this.levelIndex + 1} hoàn thành.`
-        : `Màn ${this.levelIndex + 1}, không cần gợi ý.`;
+        ? `Level ${this.levelIndex + 1} completed.`
+        : `Level ${this.levelIndex + 1} completed without hints!`;
     panel.add(this.add.text(0, -h / 2 + 146, sub, textStyle(26, '600', HEX.LINEN_DIM)).setOrigin(0.5));
 
-    const primaryLabel = isLast ? 'Về trang chính' : 'Màn tiếp theo';
+    const primaryLabel = isLast ? 'Main Menu' : 'Next Level';
     const primary = createButton(
       this,
       0,
@@ -411,7 +411,7 @@ export class GameScene extends Phaser.Scene {
       radius: 38,
       fill: COLORS.FELT,
     });
-    replay.face.add(this.add.text(0, -2, 'Chơi lại', textStyle(26, '800')).setOrigin(0.5));
+    replay.face.add(this.add.text(0, -2, 'Replay', textStyle(26, '800')).setOrigin(0.5));
     panel.add(replay.container);
 
     const levels = createButton(
@@ -423,7 +423,7 @@ export class GameScene extends Phaser.Scene {
       () => this.leave('LevelSelectScene', { chapter: chapterOf(Math.min(this.levelIndex + 1, LEVELS.length - 1)) }),
       { radius: 38, fill: COLORS.FELT }
     );
-    levels.face.add(this.add.text(0, -2, 'Chọn màn', textStyle(26, '800')).setOrigin(0.5));
+    levels.face.add(this.add.text(0, -2, 'Levels', textStyle(26, '800')).setOrigin(0.5));
     panel.add(levels.container);
 
     layer.add(panel);

@@ -31,8 +31,8 @@ const config: Phaser.Types.Core.GameConfig = {
 // Canvas text needs fonts ready before first draw; never block longer than 1.5s
 async function loadFonts() {
   const loads = Promise.all([
-    document.fonts.load('800 64px "Baloo 2"', 'Single Line Màn'),
-    document.fonts.load('600 20px "Baloo 2"', 'Chọn màn đường'),
+    document.fonts.load('800 64px "Baloo 2"', 'Single Line Level'),
+    document.fonts.load('600 20px "Baloo 2"', 'Select Level lines'),
   ]);
   const timeout = new Promise((resolve) => setTimeout(resolve, 1500));
   try {
